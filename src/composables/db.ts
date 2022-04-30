@@ -21,5 +21,8 @@ const eventsCol = createCollection<Events>('events')
 
 export const useEvent = async(id: string) => {
   const userRef = doc(eventsCol, id)
-  return (await getDoc(userRef)).data()
+  const result = (await getDoc(userRef)).data()
+  // eslint-disable-next-line no-console
+  console.log(result)
+  return result
 }

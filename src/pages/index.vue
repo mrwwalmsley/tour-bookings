@@ -1,11 +1,21 @@
 <script setup lang="ts">
 
+import type { Timestamp } from 'firebase/firestore'
+import { useEvent } from '~/composables/db'
+
 const groupSize = ref()
+const event = await useEvent('hamilton-2022')
 
 const router = useRouter()
 const go = () => {
   router.push('/booking')
 }
+
+const getDateString = (timestamp: Timestamp) => timestamp.toDate().toLocaleString('en', {
+  month: 'short',
+  weekday: 'short',
+  day: 'numeric',
+})
 
 const { t } = useI18n()
 </script>
@@ -17,12 +27,17 @@ const { t } = useI18n()
       src="icon.webp"
       width="150"
     >
+
     <p>{{ t('intro.title') }}</p>
     <p>
       <em text-sm opacity-75>{{ t('intro.desc') }}</em>
     </p>
 
     <div py-4 />
+
+    <div v-for="booking in event?.bookings" :key="booking.date.seconds">
+      {{ getDateString(booking.date) }}
+    </div>
 
     <input
       id="input"
