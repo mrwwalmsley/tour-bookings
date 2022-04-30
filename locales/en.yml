@@ -6,9 +6,11 @@ button:
   toggle_dark: Toggle dark mode
   toggle_langs: Change languages
 intro:
-  desc: Opinionated Vite Starter Template
+  title: Hamilton Temple Tour Bookings
+  desc: Book Your Tour Time Now
   dynamic-route: Demo of dynamic route
   hi: Hi, {name}!
   aka: Also known as
+  group-size-label: How many in your group?
   whats-your-name: What's your name?
 not-found: Not found
