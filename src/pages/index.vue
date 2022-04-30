@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { useUserStore } from '~/stores/user'
 
-const user = useUserStore()
-const name = $ref(user.savedName)
+const groupSize = ref()
 
 const router = useRouter()
 const go = () => {
-  if (name)
-    router.push(`/hi/${encodeURIComponent(name)}`)
+  router.push('/booking')
 }
 
 const { t } = useI18n()
@@ -15,14 +12,12 @@ const { t } = useI18n()
 
 <template>
   <div>
-    <div text-4xl>
-      <div i-carbon-campsite inline-block />
-    </div>
-    <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse" target="_blank">
-        Vitesse
-      </a>
-    </p>
+    <img
+      mx-auto
+      src="icon.webp"
+      width="150"
+    >
+    <p>{{ t('intro.title') }}</p>
     <p>
       <em text-sm opacity-75>{{ t('intro.desc') }}</em>
     </p>
@@ -31,10 +26,10 @@ const { t } = useI18n()
 
     <input
       id="input"
-      v-model="name"
-      :placeholder="t('intro.whats-your-name')"
-      :aria-label="t('intro.whats-your-name')"
-      type="text"
+      v-model="groupSize"
+      :placeholder="t('intro.group-size-label')"
+      :aria-label="t('intro.group-size-label')"
+      type="number"
       autocomplete="false"
       p="x4 y2"
       w="250px"
@@ -44,12 +39,12 @@ const { t } = useI18n()
       outline="none active:none"
       @keydown.enter="go"
     >
-    <label class="hidden" for="input">{{ t('intro.whats-your-name') }}</label>
+    <label class="hidden" for="input">{{ t('intro.group-size-label') }}</label>
 
     <div>
       <button
         btn m-3 text-sm
-        :disabled="!name"
+        :disabled="!groupSize"
         @click="go"
       >
         {{ t('button.go') }}
