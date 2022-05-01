@@ -2,6 +2,7 @@
 
 import type { Timestamp } from 'firebase/firestore'
 import { useEvent } from '~/composables/db'
+import type { Booking } from '~/types'
 
 const groupSize = ref()
 const event = await useEvent('hamilton-2022')
@@ -16,6 +17,21 @@ const getDateString = (timestamp: Timestamp) => timestamp.toDate().toLocaleStrin
   weekday: 'short',
   day: 'numeric',
 })
+
+const getHours = (day: Booking) => {
+  const times = Object.entries(day.times).sort((entry1, entry2) => {
+    return entry1[0].localeCompare(entry2[0])
+  })
+
+  const startHour = Number(times[0][0].split(':')[0])
+
+  const result: Record<string, number> = {}
+  times.forEach(([time, count]) => {
+    const hour = Math.floor((Number(time.split(':')[0]) - startHour) / 2)
+    result[hour] = (result[hour] || 0) + count
+  })
+  return result
+}
 
 const { t } = useI18n()
 </script>
@@ -35,9 +51,20 @@ const { t } = useI18n()
 
     <div py-4 />
 
-    <div v-for="booking in event?.bookings" :key="booking.date.seconds">
-      {{ getDateString(booking.date) }}
+    <div grid mx-auto w-120 gap-1 cursor-pointer>
+      <div v-for="(day, index) in event?.days" :key="day.date.seconds" class="group" contents>
+        <span text-right pr-2 leading-8 :class="`row-start-${index + 1}`">{{ getDateString(day.date) }}</span>
+        <span
+          v-for="(count, time) in getHours(day)" :key="time"
+          :title="time" :class="`row-start-${index + 1}`"
+          rd-1 bg="blue-2"
+          text-xs c-transparent leading-8
+          group-hover:c-white
+        >{{ count }}
+        </span>
+      </div>
     </div>
+    <div py-4 />
 
     <input
       id="input"

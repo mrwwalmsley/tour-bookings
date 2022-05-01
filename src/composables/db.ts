@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import type { CollectionReference, DocumentData } from 'firebase/firestore'
-import { collection, doc, getDoc, getFirestore } from 'firebase/firestore'
-import type { Events } from '~/types'
+import { collection, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore'
+import type { Event } from '~/types'
 
 initializeApp({
   apiKey: 'AIzaSyA8zgCLHrV_rziJIfGgYPfRaeui-5BQzyE',
@@ -17,7 +17,7 @@ const createCollection = <T = DocumentData>(collectionName: string) => {
   return collection(firestore, collectionName) as CollectionReference<T>
 }
 
-const eventsCol = createCollection<Events>('events')
+const eventsCol = createCollection<Event>('events')
 
 export const useEvent = async(id: string) => {
   const userRef = doc(eventsCol, id)
@@ -25,4 +25,9 @@ export const useEvent = async(id: string) => {
   // eslint-disable-next-line no-console
   console.log(result)
   return result
+}
+
+export const setEvent = async(id: string, data: Event) => {
+  const userRef = doc(eventsCol, id)
+  await setDoc(userRef, data)
 }

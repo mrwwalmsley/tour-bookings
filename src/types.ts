@@ -3,10 +3,11 @@ import { type ViteSSGContext } from 'vite-ssg'
 
 export type UserModule = (ctx: ViteSSGContext) => void
 
-type Booking = {
+export interface Booking {
   date: Timestamp
-} & Record<string, number>
-export interface Events {
+  times: Record<string, number>
+}
+export interface Event {
   name: string
-  bookings: Booking[]
+  days: Booking[]
 }
