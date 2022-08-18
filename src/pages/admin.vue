@@ -69,7 +69,7 @@ const getDateString = (timestamp: Timestamp) => timestamp.toDate().toLocaleStrin
   <div>
     <img
       mx-auto
-      src="icon.webp"
+      src="logo.png"
       width="150"
     >
 

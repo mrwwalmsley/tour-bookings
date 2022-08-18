@@ -40,7 +40,7 @@ const { t } = useI18n()
   <div>
     <img
       mx-auto
-      src="icon.webp"
+      src="logo.png"
       width="150"
     >
 
@@ -51,9 +51,9 @@ const { t } = useI18n()
 
     <div py-4 />
 
-    <div grid mx-auto w-120 gap-1 cursor-pointer>
+    <div grid mx-auto w-120 gap-1 cursor-pointer style="grid-template-columns: auto repeat(5, 1fr)">
       <div v-for="(day, index) in event?.days" :key="day.date.seconds" class="group" contents>
-        <span text-right pr-2 leading-8 :class="`row-start-${index + 1}`">{{ getDateString(day.date) }}</span>
+        <span pr-2 text-right whitespace-nowrap leading-8 :class="`row-start-${index + 1}`">{{ getDateString(day.date) }}</span>
         <span
           v-for="(count, time) in getHours(day)" :key="time"
           :title="time" :class="`row-start-${index + 1}`"
